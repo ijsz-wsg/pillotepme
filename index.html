@@ -817,55 +817,6 @@ tbody td{padding:10px 13px;color:var(--ink);vertical-align:middle}
 
 <div id="toasts"></div>
 
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBfhLt_hHr79SWuc0O7s44E-DGkRAMXfaE",
-  authDomain: "pillotepme.firebaseapp.com",
-  databaseURL: "https://pillotepme-default-rtdb.firebaseio.com",
-  projectId: "pillotepme",
-  storageBucket: "pillotepme.firebasestorage.app",
-  messagingSenderId: "786393544988",
-  appId: "1:786393544988:web:32e9f512e2a661a591a2d9",
-  measurementId: "G-8N0X7LKBXC"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.checkLicence = async function(email) {
-  if(!email) return;
-  try {
-    const docRef = doc(db, "licences", email.toLowerCase().trim());
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      const niveau = parseInt(data.niveau) || 0;
-      S.n1 = niveau >= 1;
-      S.n2 = niveau >= 2;
-      S.n3 = niveau >= 3;
-      localStorage.setItem('ppme_n1', S.n1 ? '1' : '0');
-      localStorage.setItem('ppme_n2', S.n2 ? '1' : '0');
-      localStorage.setItem('ppme_n3', S.n3 ? '1' : '0');
-      window.userLevel = "N" + niveau;
-    } else {
-      S.n1 = false; S.n2 = false; S.n3 = false;
-      window.userLevel = "N0";
-    }
-    if (typeof applyLevelAccess === 'function') applyLevelAccess();
-    const activePage = document.querySelector('.page.active');
-    if(activePage && typeof go === 'function'){
-      const pageId = activePage.id.replace('pg-','');
-      go(pageId);
-    }
-  } catch (e) {
-    console.error("Firestore error:", e);
-  }
-};
-</script>
 <script>
 // ══════════════════════════════════════════
 //  CONFIG GOOGLE SHEETS
@@ -939,7 +890,51 @@ async function handleToken(resp){
 }
 
 async function checkLicence(email){
-  if(window.checkLicence) await window.checkLicence(email);
+  if(!email) return;
+  try{
+    // Initialiser Firebase si pas encore fait
+    if(!firebase.apps.length){
+      firebase.initializeApp({ databaseURL: FIREBASE_DB_URL });
+    }
+    const db = firebase.database();
+    
+    // Nettoyer l'email pour l'utiliser comme clé Firebase
+    // Firebase n'accepte pas les points dans les clés → on les remplace
+    const emailKey = email.toLowerCase().trim().replace(/\./g, ',');
+    
+    const snapshot = await db.ref('licences/' + emailKey).get();
+    
+    if(snapshot.exists()){
+      const data = snapshot.val();
+      const niveau = (data.niveau || '').toUpperCase().trim();
+      const statut = (data.statut || 'ACTIF').toUpperCase().trim();
+      
+      if(statut === 'BLOQUE' || statut === 'INACTIF'){
+        // Bloqué = reste en gratuit
+        return;
+      }
+      
+      if(niveau === 'N1'){ S.n1 = true; S.n2 = false; S.n3 = false; }
+      if(niveau === 'N2'){ S.n1 = true; S.n2 = true; S.n3 = false; }
+      if(niveau === 'N3'){ S.n1 = true; S.n2 = true; S.n3 = true; }
+      
+      localStorage.setItem('ppme_n1', S.n1 ? '1' : '0');
+      localStorage.setItem('ppme_n2', S.n2 ? '1' : '0');
+      localStorage.setItem('ppme_n3', S.n3 ? '1' : '0');
+      applyLevelAccess();
+      // Rafraîchir la page courante pour débloquer si nécessaire
+      const activePage = document.querySelector('.page.active');
+      if(activePage){
+        const pageId = activePage.id.replace('pg-','');
+        go(pageId);
+      }
+    }
+    // Si email pas trouvé → reste en gratuit (rien à faire)
+    
+  }catch(e){
+    console.error('Firebase licence check:', e);
+    // Erreur → on laisse en gratuit
+  }
 }
 
 function applyLevelAccess(){
