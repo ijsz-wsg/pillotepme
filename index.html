@@ -1180,6 +1180,9 @@ const firebaseConfig = {
 };
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+db.enablePersistence().catch(function(err) {
+    console.log("Erreur persistance Firebase : ", err.code);
+});
 const auth = firebase.auth(); 
 const provider = new firebase.auth.GoogleAuthProvider();
 
