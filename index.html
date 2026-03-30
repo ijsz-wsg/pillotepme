@@ -340,6 +340,16 @@ tbody td{padding:10px 13px;color:var(--ink);vertical-align:middle}
   .sb-collapse{display:none !important}
   .login-feats{grid-template-columns:1fr}
 }
+/* --- DESIGN DU CHAT IA --- */
+.chat-box { max-height: 350px; overflow-y: auto; padding: 15px; background: var(--bg); border-radius: var(--r2); display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+.msg { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; max-width: 85%; animation: fadeIn 0.2s; }
+.msg.ai { background: var(--surface); border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 2px; }
+.msg.user { background: var(--green); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+.chat-input-row { display: flex; gap: 8px; }
+.chat-input { flex: 1; padding: 10px 14px; border: 1px solid var(--border2); border-radius: 20px; font-family: var(--sans); font-size: 13px; outline: none; background:var(--surface); color:var(--ink); }
+.chat-input:focus { border-color: var(--green); }
+.chat-send-btn { background: var(--green); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
+.chat-send-btn:disabled { background: var(--ink4); cursor: not-allowed; }
 </style>
 <!-- Firebase SDK & Firebase AUTH officiel -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -399,8 +409,7 @@ tbody td{padding:10px 13px;color:var(--ink);vertical-align:middle}
     </div>
     <div class="sb-section">
       <div class="sb-section-label">Niveau 2</div>
-      <div class="sb-item" id="ni-multi" onclick="go('multi')"><div class="sb-ic-wrap"><svg class="ic" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="sb-item-label">Multi-Métiers</span><span id="lock-multi" class="sb-badge locked">🔒</span></div>
-      <div class="sb-item" id="ni-ia" onclick="go('ia')"><div class="sb-ic-wrap"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><span class="sb-item-label">IA & Prévisions</span><span id="lock-ia" class="sb-badge locked">🔒</span></div>
+<div class="sb-item" id="ni-ia" onclick="go('ia')"><div class="sb-ic-wrap"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><span class="sb-item-label" style="font-weight:bold; color:var(--green);">Conseiller IA 🧠</span><span id="lock-ia" class="sb-badge locked">🔒</span></div>
     </div>
     <div class="sb-section">
       <div class="sb-section-label">Config</div>
@@ -605,7 +614,7 @@ tbody td{padding:10px 13px;color:var(--ink);vertical-align:middle}
         <div class="lock-card">
           <div class="lock-ic"><svg class="ic-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
           <div class="lock-title">Niveau 1 — Stock</div>
-          <div class="lock-sub">Débloquez le <b>Niveau 1</b> pour gérer votre stock.<br><br>💡 <i>Astuce : Allez dans le menu IA ou Multi-Métiers pour acheter directement le <b>Pack Complet (Niveau 2)</b> et profitez d'une réduction !</i></div>
+          <div class="lock-sub">Débloquez le <b>Niveau 1</b> pour gérer votre stock.<br><br>💡 <i>Astuce : Allez dans le menu IA pour acheter directement le <b>Pack Complet (Niveau 2)</b> et profitez d'une réduction !</i></div>
           <button class="btn btn-primary btn-lock-cta" onclick="S.offreCible = 1; document.getElementById('upgrade-modal').classList.add('show')">🚀 Activer ma licence maintenant</button>
         </div>
       </div>
@@ -673,7 +682,7 @@ tbody td{padding:10px 13px;color:var(--ink);vertical-align:middle}
         <div class="lock-card">
           <div class="lock-ic"><svg class="ic-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
           <div class="lock-title">Niveau 1 — Clients, Dettes & Fournisseurs</div>
-          <div class="lock-sub">Débloquez le <b>Niveau 1</b> pour gérer vos clients et dettes.<br><br>💡 <i>Astuce : Allez dans le menu IA ou Multi-Métiers pour acheter directement le <b>Pack Complet (Niveau 2)</b> et profitez d'une réduction !</i></div>
+          <div class="lock-sub">Débloquez le <b>Niveau 1</b> pour gérer vos clients et dettes.<br><br>💡 <i>Astuce : Allez dans le menu IA pour acheter directement le <b>Pack Complet (Niveau 2)</b> et profitez d'une réduction !</i></div>
           <button class="btn btn-primary btn-lock-cta" onclick="S.offreCible = 1; document.getElementById('upgrade-modal').classList.add('show')">🚀 Activer ma licence maintenant</button>
         </div>
       </div>
@@ -731,120 +740,212 @@ tbody td{padding:10px 13px;color:var(--ink);vertical-align:middle}
       </div>
     </div>
 
-    <!-- MULTI -->
-    <div class="page" id="pg-multi">
-      <!-- 🧱 ÉTAPE A : CARROSSERIE (BOUTON CTA INTÉGRÉ) -->
-      <div id="multi-lock" style="display:none">
-        <div class="lock-card">
-          <div class="lock-ic"><svg class="ic-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-          <div class="lock-title">Niveau 2 — Multi-Métiers</div>
-          <div class="lock-sub">Gérez jusqu'à 3 business simultanément. Réservé Niveau 2 et supérieur.</div>
-          <button class="btn btn-primary btn-lock-cta" onclick="S.offreCible = 2; document.getElementById('upgrade-modal').classList.add('show')">🚀 Activer ma licence maintenant</button>
-        </div>
-      </div>
-      <div id="multi-cont" style="display:none">
-        <div class="g3 mb20">
-          <div class="kpi"><div class="kpi-label" id="b1-lbl">Business 1</div><div class="kpi-val p" id="b1-tot">0 <span class="lbl-devise">FCFA</span></div></div>
-          <div class="kpi"><div class="kpi-label" id="b2-lbl">Business 2</div><div class="kpi-val p" id="b2-tot">0 <span class="lbl-devise">FCFA</span></div></div>
-          <div class="kpi"><div class="kpi-label" id="b3-lbl">Business 3</div><div class="kpi-val p" id="b3-tot">0 <span class="lbl-devise">FCFA</span></div></div>
-        </div>
-        <div class="card mb20"><div class="card-head"><div class="card-title">Nouvelle transaction multi-business</div></div><div class="card-body"><div class="fgrid"><div class="fg"><label class="fl">Business</label><select class="fsel" id="mb-biz"><option value="0">Business 1</option><option value="1">Business 2</option><option value="2">Business 3</option></select></div><div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="mb-date"></div><div class="fg" style="grid-column:span 2"><label class="fl">Produit / Service</label><input type="text" class="fi" id="mb-desc"></div><div class="fg"><label class="fl">Quantité</label><input type="number" class="fi" id="mb-qty" value="1"></div><div class="fg"><label class="fl">Prix unit.</label><input type="number" class="fi" id="mb-prix"></div><div class="fg"><label class="fl">Moyen de paiement</label><select class="fsel" id="mb-pay"><option>Espèces</option><option>Mobile Money</option></select></div></div><button class="btn btn-primary" onclick="saveMB()">Enregistrer</button></div></div>
-        <div class="card"><div class="card-head"><div class="card-title">Journal multi-business</div></div><div class="tbl-wrap"><table><thead><tr><th>Business</th><th>Date</th><th>Description</th><th>Qté</th><th>Prix unit.</th><th>Montant</th><th>Paiement</th><th></th></tr></thead><tbody id="mb-body"></tbody></table></div></div>
-      </div>
-    </div>
-
-    <!-- IA -->
+<!-- PAGE NIVEAU 2 : CONSEILLER IA (HYBRIDE) -->
     <div class="page" id="pg-ia">
-      <!-- 🧱 ÉTAPE A : CARROSSERIE (BOUTON CTA INTÉGRÉ) -->
-      <div id="ia-lock" style="display:none">
-        <div class="lock-card">
-          <div class="lock-ic"><svg class="ic-lg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
-          <div class="lock-title">Niveau 2 — IA & Automatisation</div>
-          <div class="lock-sub">Analyses et relances auto par Intelligence Artificielle. Réservé Niveau 2.</div>
-          <button class="btn btn-primary btn-lock-cta" onclick="S.offreCible = 2; document.getElementById('upgrade-modal').classList.add('show')">🚀 Activer ma licence maintenant</button>
+        
+        <!-- 1. LE VERROU (Pour les comptes gratuits) -->
+        <div id="ia-lock" style="display:none; padding: 40px 20px;">
+            <div class="lock-card" style="max-width: 450px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; border: 1px solid var(--ink2); text-align: center;">
+                <div style="font-size: 40px; margin-bottom: 15px;">🧠</div>
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 8px;">Directeur Financier Virtuel</div>
+                <div style="color: var(--ink3); font-size: 14px; margin-bottom: 24px;">Analyse SWOT, Prévisions sur 6 mois, Score de santé et connexion Gemini. Réservé au Niveau 2.</div>
+                <button class="btn btn-primary btn-lock-cta" style="width: 100%;" onclick="S.offreCible=2; document.getElementById('upgrade-modal').classList.add('show')">
+                    🚀 Engager mon Directeur Financier
+                </button>
+            </div>
         </div>
-      </div>
-      <div id="ia-cont" style="display:none">
+
+        <!-- 2. LE CONTENU (Pour les Niveau 2) -->
+        <div id="ia-cont" style="display:none;">
+            
+            <!-- EN-TÊTE : SCORE DE SANTÉ -->
+            <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px; background:var(--surface); padding:16px; border-radius:var(--r); border:1px solid var(--border); box-shadow:var(--sh);">
+                <div style="font-size:40px; background:var(--green-pale); border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center;">🤖</div>
+                <div>
+                    <div style="font-size:16px; font-weight:700; color:var(--ink);">Bonjour <span id="ia-user-name">Patron</span>, voici le diagnostic.</div>
+                    <div style="font-size:12px; color:var(--ink3);">Analyse instantanée de votre base de données.</div>
+                </div>
+                <div style="margin-left:auto; text-align:center;">
+                    <div style="font-size:10px; font-weight:700; color:var(--ink3); text-transform:uppercase;">Score Santé</div>
+                    <div style="font-size:28px; font-weight:800; font-family:var(--mono);" id="ia-health-score">--/100</div>
+                </div>
+            </div>
+
         <div class="g2 mb20">
-          <div class="card"><div class="card-head"><div class="card-title">Recommandations IA</div></div><div class="card-body" id="ia-recos"></div></div>
-          <div class="card"><div class="card-head"><div class="card-title">Prévision trésorerie 3 mois</div></div><div class="card-body" id="ia-prev"></div></div>
-        </div>
-        <div class="card"><div class="card-head"><div class="card-title">Relances WhatsApp</div><div class="card-sub">Cliquez pour copier</div></div><div class="card-body" id="ia-wa"></div></div>
-      </div>
-    </div>
+                <div class="card" style="grid-row: span 2;">
+                    <div class="card-head">
+                        <div class="card-title">Analyse Stratégique (SWOT)</div>
+                        <div class="card-sub">Cliquez sur une case pour les détails</div>
+                    </div>
+                    <div class="card-body" style="padding:0;">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; border-bottom:1px solid var(--border);">
+                            <div class="swot-box" style="border-right:1px solid var(--border); background:var(--green-dim); cursor:pointer; transition:background 0.2s;" onclick="showSwotDetail('S')" onmouseover="this.style.background='var(--green-pale)'" onmouseout="this.style.background='var(--green-dim)'">
+                                <strong style="color:var(--green);">💪 Forces</strong><br>
+                                <div id="swot-s" style="margin-top:5px; padding-left:15px;">Calcul...</div>
+                            </div>
+                            <div class="swot-box" style="background:var(--red-dim); cursor:pointer; transition:background 0.2s;" onclick="showSwotDetail('W')" onmouseover="this.style.background='var(--red-pale)'" onmouseout="this.style.background='var(--red-dim)'">
+                                <strong style="color:var(--red);">⚠️ Faiblesses</strong><br>
+                                <div id="swot-w" style="margin-top:5px; padding-left:15px;">Calcul...</div>
+                            </div>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr;">
+                            <div class="swot-box" style="border-right:1px solid var(--border); background:var(--purple-dim); cursor:pointer; transition:background 0.2s;" onclick="showSwotDetail('O')" onmouseover="this.style.background='var(--purple-pale)'" onmouseout="this.style.background='var(--purple-dim)'">
+                                <strong style="color:var(--purple);">🚀 Opportunités</strong><br>
+                                <div id="swot-o" style="margin-top:5px; padding-left:15px;">Calcul...</div>
+                            </div>
+                            <div class="swot-box" style="background:var(--orange-dim); cursor:pointer; transition:background 0.2s;" onclick="showSwotDetail('T')" onmouseover="this.style.background='var(--orange-pale)'" onmouseout="this.style.background='var(--orange-dim)'">
+                                <strong style="color:var(--orange);">🛡️ Menaces</strong><br>
+                                <div id="swot-t" style="margin-top:5px; padding-left:15px;">Calcul...</div>
+                            </div>
+                        </div>
+                        <div id="swot-details-panel" style="display:none; padding:16px; background:var(--surface2); border-top:1px solid var(--border); font-size:13px; color:var(--ink2); line-height:1.6; border-bottom-left-radius:var(--r); border-bottom-right-radius:var(--r);">
+                            Cliquez sur une case au-dessus pour voir l'analyse financière détaillée.
+                        </div>
+                    </div>
+                </div>
 
-    <!-- PARAMS -->
-    <div class="page" id="pg-params">
-      
-      <!-- 🛡️ ÉTAPE 1, 2, 4 & 5 : CARTE SÉCURITÉ & ARCHIVES -->
-      <div class="card mb20" id="card-archive" style="display:none; border:1px solid rgba(231,76,60,.4)">
-        <div class="card-head" style="background:var(--red-pale)">
-          <div class="card-title" style="color:var(--red)">🛡️ Sécurité & Archives (Niveau 2)</div>
-          <div class="card-sub" style="color:var(--red)">Surveillez les transactions supprimées et protégez vos données.</div>
-        </div>
-        <div class="card-body">
-           <div id="pin-setup-box" style="display:none">
-              <div style="font-size:13px; color:var(--ink3); margin-bottom:14px;">La Corbeille Sécurisée n'est pas encore activée. Créez votre code PIN pour commencer à protéger vos suppressions.</div>
-              <button class="btn btn-primary" onclick="openPinSetup()">Activer la Corbeille Sécurisée</button>
-           </div>
-           <div id="pin-active-box" style="display:none">
-              <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; color:var(--green); font-weight:600; font-size:13px;">
-                  <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Coffre-fort activé
-              </div>
-              <button class="btn" style="background:#1A2332; color:#fff;" onclick="openArchivePrompt()">Ouvrir les Archives</button>
-           </div>
-        </div>
-      </div>
-      
-      <div class="g2 mb20">
-        <div class="card"><div class="card-head"><div class="card-title">Profils des business</div></div><div class="card-body" id="p-biz"></div></div>
-        <div class="card">
-          <div class="card-head"><div class="card-title">Statut de votre licence</div></div>
-          <div class="card-body">
-            <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--green-pale);border-radius:var(--r2);border:1px solid rgba(22,160,133,.2)">
-              <svg class="ic" viewBox="0 0 24 24" style="color:var(--green)"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              <div><div style="font-size:13px;font-weight:600;color:var(--green)" id="p-licence-status">Vérification en cours…</div><div style="font-size:11px;color:var(--ink3)" id="p-licence-email">—</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="card-title">Configuration système</div></div>
-        <div class="card-body">
-          <div class="fgrid">
-            <div class="fg">
-              <label class="fl">Devise principale</label>
-              <select class="fsel" id="p-devise">
-                <option value="FCFA">CFA (FCFA)</option>
-                <option value="XAF">Franc CFA (XAF)</option>
-                <option value="XOF">Franc CFA (XOF)</option>
-                <option value="€">Euro (€)</option>
-                <option value="$">Dollar US ($)</option>
-                <option value="CAD">Dollar Canadien (CAD)</option>
-                <option value="£">Livre Sterling (£)</option>
-                <option value="GNF">Franc Guinéen (GNF)</option>
-                <option value="CDF">Franc Congolais (CDF)</option>
-                <option value="NGN">Naira (NGN)</option>
-                <option value="GHS">Cedi (GHS)</option>
-                <option value="ZAR">Rand (ZAR)</option>
-                <option value="MAD">Dirham Marocain (MAD)</option>
-                <option value="KES">Shilling Kényan (KES)</option>
-              </select>
-            </div>
-            <div class="fg"><label class="fl">Tréso. critique</label><input type="number" class="fi" id="p-tresor"></div>
-            <div class="fg"><label class="fl">Stock min.</label><input type="number" class="fi" id="p-stock"></div>
-            <div class="fg"><label class="fl">Marge min. (%)</label><input type="number" class="fi" id="p-marge"></div>
-          </div>
-          <div id="devise-warn" style="font-size:10px;color:var(--orange);margin-bottom:12px;display:none;">Attention : Vous avez déjà enregistré des opérations. La devise est verrouillée pour éviter de fausser votre comptabilité.</div>
-          <button class="btn btn-ghost" onclick="saveParams()">Enregistrer</button>
-        </div>
-      </div>
-    </div>
+                <div class="card">
+                    <div class="card-head"><div class="card-title">Prévisions (3 Prochains mois)</div></div>
+                    <div class="card-body" id="ia-prev" style="padding:16px;">
+                        En attente de données...
+                    </div>
+                </div>
 
-  </div>
+                <div class="card">
+                    <div class="card-head"><div class="card-title">Insights & Plan d'action</div></div>
+                    <div class="card-body" id="ia-missions" style="padding:16px;">
+                        Calcul en cours...
+                    </div>
+                </div>
+            </div>
+
+<!-- RAPPORT GEMINI (LE CHAT INTERACTIF) -->
+            <div class="card mb20">
+                <div class="card-head"><div class="card-title">Assistant IA Interactif (Gemini)</div></div>
+                <div class="card-body">
+                    <!-- Si pas de clé API -->
+                    <div id="ia-gemini-locked" style="display:none; text-align:center; padding:20px;">
+                        <div style="font-size:30px; margin-bottom:10px;">🔑</div>
+                        <div style="font-weight:bold; margin-bottom:10px;">Clé API requise</div>
+                        <div style="font-size:12px; color:var(--ink3); margin-bottom:15px;">Connectez votre clé API Google Gemini dans les paramètres pour discuter en direct avec votre IA.</div>
+                        <button class="btn btn-ghost" onclick="go('params')">Aller aux Paramètres</button>
+                    </div>
+                    <!-- Si clé API présente (LE CHAT) -->
+                    <div id="ia-gemini-unlocked" style="display:none;">
+                        <div class="chat-box" id="chat-history">
+                            <div class="msg ai">Bonjour ! Je suis votre conseiller financier virtuel. J'ai analysé tous vos chiffres en temps réel. Que voulez-vous savoir ou optimiser aujourd'hui ?</div>
+                        </div>
+                        <div class="chat-input-row" style="margin-top:10px;">
+                            <input type="text" class="chat-input" id="chat-input" placeholder="Posez une question sur votre business..." onkeypress="if(event.key==='Enter') sendGeminiMessage()">
+                            <button class="chat-send-btn" id="chat-btn" onclick="sendGeminiMessage()">
+                                <svg class="ic" viewBox="0 0 24 24" style="stroke-width: 2.5; margin-left:-2px; stroke: white; fill: none;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb20">
+                <div class="card-head"><div class="card-title">Assistant Recouvrement (WhatsApp)</div></div>
+                <div class="card-body" id="ia-wa" style="padding:0;"></div>
+            </div>    
+        </div>
 </div>
-
-<!-- MODALS -->
+    <!-- FIN DE LA PAGE IA -->    
+<!-- PARAMS -->
+<div class="page" id="pg-params">      
+  <!-- 🛡️ LA CARTE SÉCURITÉ & ARCHIVES EST DE RETOUR -->
+  <div class="card mb20" id="card-archive" style="display:none; border:1px solid rgba(231,76,60,.4)">
+    <div class="card-head" style="background:var(--red-pale)">
+      <div class="card-title" style="color:var(--red)">🛡️ Sécurité & Archives (Niveau 2)</div>
+      <div class="card-sub" style="color:var(--red)">Surveillez les transactions supprimées et protégez vos données.</div>
+    </div>
+    <div class="card-body">
+       <div id="pin-setup-box" style="display:none">
+          <div style="font-size:13px; color:var(--ink3); margin-bottom:14px;">La Corbeille Sécurisée n'est pas encore activée. Créez votre code PIN pour commencer à protéger vos suppressions.</div>
+          <button class="btn btn-primary" onclick="openPinSetup()">Activer la Corbeille Sécurisée</button>
+       </div>
+       <div id="pin-active-box" style="display:none">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; color:var(--green); font-weight:600; font-size:13px;">
+              <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Coffre-fort activé
+          </div>
+          <button class="btn" style="background:#1A2332; color:#fff;" onclick="openArchivePrompt()">Ouvrir les Archives</button>
+       </div>
+    </div>
+  </div>
+  
+  <div class="g2 mb20">
+    <!-- LE NOUVEAU PROFIL ENTREPRISE -->
+    <div class="card">
+      <div class="card-head"><div class="card-title">Profil de l'entreprise</div></div>
+      <div class="card-body">
+        <div class="fg" style="margin-bottom: 12px;">
+          <label class="fl">Nom de l'entreprise / Boutique</label>
+          <input type="text" class="fi" id="p-biz-name" placeholder="Ex: Ma Boutique" onchange="saveParams()">
+        </div>
+        <div style="font-size:11px; color:var(--ink3);">Ce nom apparaîtra sur vos reçus, vos relances WhatsApp et dans le menu.</div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-head"><div class="card-title">Statut de votre licence</div></div>
+      <div class="card-body">
+        <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--green-pale);border-radius:var(--r2);border:1px solid rgba(22,160,133,.2)">
+          <svg class="ic" viewBox="0 0 24 24" style="color:var(--green)"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div><div style="font-size:13px;font-weight:600;color:var(--green)" id="p-licence-status">Vérification en cours…</div><div style="font-size:11px;color:var(--ink3)" id="p-licence-email">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-head"><div class="card-title">Configuration système</div></div>
+    <div class="card-body">
+      <div class="fgrid">
+        <div class="fg">
+          <label class="fl">Devise principale</label>
+          <select class="fsel" id="p-devise">
+            <option value="FCFA">CFA (FCFA)</option>
+            <option value="XAF">Franc CFA (XAF)</option>
+            <option value="XOF">Franc CFA (XOF)</option>
+            <option value="€">Euro (€)</option>
+            <option value="$">Dollar US ($)</option>
+            <option value="CAD">Dollar Canadien (CAD)</option>
+            <option value="£">Livre Sterling (£)</option>
+            <option value="GNF">Franc Guinéen (GNF)</option>
+            <option value="CDF">Franc Congolais (CDF)</option>
+            <option value="NGN">Naira (NGN)</option>
+            <option value="GHS">Cedi (GHS)</option>
+            <option value="ZAR">Rand (ZAR)</option>
+            <option value="MAD">Dirham Marocain (MAD)</option>
+            <option value="KES">Shilling Kényan (KES)</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Tréso. critique</label><input type="number" class="fi" id="p-tresor"></div>
+        <div class="fg"><label class="fl">Stock min.</label><input type="number" class="fi" id="p-stock"></div>
+        <div class="fg"><label class="fl">Marge min. (%)</label><input type="number" class="fi" id="p-marge"></div>
+      </div>
+      <div id="devise-warn" style="font-size:10px;color:var(--orange);margin-bottom:12px;display:none;">Attention : Vous avez déjà enregistré des opérations. La devise est verrouillée pour éviter de fausser votre comptabilité.</div>
+      <button class="btn btn-ghost" onclick="saveParams()">Enregistrer</button>
+    </div>
+  </div>
+  <!-- BOÎTE CLÉ API GEMINI -->
+          <div class="card">
+            <div class="card-head"><div class="card-title">Intelligence Artificielle (Niveau 2)</div></div>
+            <div class="card-body">
+              <div class="fg">
+                <label class="fl">Clé API Google Gemini (Optionnel)</label>
+                <input type="password" class="fi" id="p-gemini-key" placeholder="Collez votre clé API ici" onchange="saveParams()">
+              </div>
+              <div style="font-size:12px; color:var(--ink3); margin-top:12px; line-height:1.5;">
+                Pour utiliser le chat interactif, vous devez fournir une clé API Gemini.<br>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" style="display:inline-flex; align-items:center; gap:5px; color:var(--green); text-decoration:none; font-weight:600; margin-top:8px; padding:6px 12px; background:var(--green-pale); border-radius:6px;">
+                  <svg class="ic-sm" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  Obtenir ma clé gratuite sur Google AI Studio
+                </a>
+              </div>
+            </div>
+          </div>
+</div>
 
 <!-- MODAL UPGRADE (Limites Freemium) AVEC NOUVEAUX BOUTONS -->
 <div id="upgrade-modal" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('show')">
@@ -1010,14 +1111,9 @@ tbody td{padding:10px 13px;color:var(--ink);vertical-align:middle}
 // ══════════════════════════════════════════
 const ADMIN_WHATSAPP = "22990944971"; // <-- METTEZ VOTRE NUMÉRO ICI (Sans +, sans espaces)
 
-
-// Les fonctions qui dirigent le client selon son choix
 function contacterAdmin() {
 window.open('https://wa.me/' + ADMIN_WHATSAPP + '?text=Bonjour,%20je%20souhaite%20acheter%20la%20licence%20Gestia', '_blank');
 }
-
-// 🚀 L'AIGUILLEUR : Redirige vers la bonne page de paiement sans afficher de prix
-// 🚀 L'AIGUILLEUR : Les 4 Liens de vente
 
 // 🚀 L'AIGUILLEUR : Les 4 Liens de vente
 function payerEnLigne() {
@@ -1036,7 +1132,6 @@ function payerEnLigne() {
     let lienFinal = lienGratuitVersN1; // Par défaut
 
     if (!S.n1) {
-        // 👁️ C'EST ICI LA MAGIE : L'Aiguilleur lit le post-it du bouton !
         if (S.offreCible === 2) {
             lienFinal = lienGratuitVersN2; // ✅ Il a cliqué sur l'IA ou Multi-Métiers
         } else {
@@ -1063,7 +1158,6 @@ const pageIcons = {
     ventes: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
     stock: '<svg class="ic" viewBox="0 0 24 24"><path d="M21 8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
     clients: '<svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
-    multi: '<svg class="ic" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
     ia: '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',
     params: '<svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>'
 };
@@ -1117,7 +1211,7 @@ async function checkLicence(email) {
     const doc = await db.collection('licences').doc(email.toLowerCase().trim()).get();
     S.n1 = false; S.n2 = false;
     S.finAboDate = null; 
-    S.aDejaEuN2 = false; // 🚀 NOUVEAU : La mémoire de l'Aiguilleur !
+    S.aDejaEuN2 = false;
 
     if(doc.exists) {
       const data = doc.data();
@@ -1131,9 +1225,8 @@ async function checkLicence(email) {
             const today = new Date().toISOString().split('T')[0]; 
             
             if(today > finAbonnement) {
-                // ❌ EXPIRED !
                 niveau = 'N1'; 
-                S.aDejaEuN2 = true; // 🚀 IL S'EN SOUVIENT : Ce client a déjà payé le N2 avant !
+                S.aDejaEuN2 = true;
                 setTimeout(() => toast("⚠️ Abonnement N2 expiré. Passage au Niveau 1.", "o"), 2000);
             } else {
                 S.finAboDate = finAbonnement;
@@ -1158,7 +1251,6 @@ async function loadUserData(email) {
       S.si = d.si || 0; S.biz = d.biz || S.biz; S.p = d.p || S.p; S.weekly = d.weekly || S.weekly;
       S.archives = d.archives || []; 
       
-      // 🤖 LE PETIT ROBOT : Nettoyage automatique des archives de plus de 30 jours au démarrage
       const thirtyDaysAgo = new Date(); 
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       S.archives = S.archives.filter(a => new Date(a.deletedAt) >= thirtyDaysAgo);
@@ -1218,23 +1310,38 @@ function updateBtnState(btnActiveId, btnInactiveId) {
 }
 
 function applyLevelAccess() {
-  const n1 = S.n1 || S.n2;
-  const n2 = S.n2;
-  ['lock-stock', 'lock-clients'].forEach(id => {
-    const el = document.getElementById(id); 
-    if(el) { el.textContent = n1 ? '✓' : '🔒'; el.className = 'sb-badge ' + (n1 ? 'open' : 'locked'); }
-  });
-  const l2 = document.getElementById('lock-multi'); if(l2) { l2.textContent = n2 ? '✓' : '🔒'; l2.className = 'sb-badge ' + (n2 ? 'open' : 'locked'); }
-  const l3 = document.getElementById('lock-ia'); if(l3) { l3.textContent = n2 ? '✓' : '🔒'; l3.className = 'sb-badge ' + (n2 ? 'open' : 'locked'); }
-  
-  // Affichage du badge Gratuit
-  const freeChip = document.getElementById('top-free-chip');
-  if(!n1) {
-      freeChip.style.display = 'flex';
-      freeChip.textContent = `Gratuit : ${S.tx.length}/50`;
-  } else {
-      freeChip.style.display = 'none';
-  }
+    const n1 = S.n1 || S.n2;
+    const n2 = S.n2;
+
+    window.hasLevel1 = n1;
+    window.hasLevel2 = n2;
+
+    ['lock-stock', 'lock-clients'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) { 
+            el.style.display = 'inline-flex';
+            el.textContent = n1 ? '√' : '🔒'; 
+            el.className = 'sb-badge ' + (n1 ? 'open' : 'locked'); 
+        }
+    });
+
+    const l3 = document.getElementById('lock-ia'); 
+    if(l3) { 
+        l3.style.display = 'inline-flex';
+        l3.textContent = n2 ? '√' : '🔒'; 
+        l3.className = 'sb-badge ' + (n2 ? 'open' : 'locked'); 
+    }
+
+    const freeChip = document.getElementById('top-free-chip');
+    if(freeChip) {
+        if(!n1) {
+            freeChip.style.display = 'flex';
+            const txCount = (S && S.tx) ? S.tx.length : 0;
+            freeChip.textContent = `Gratuit : ${txCount}/50`;
+        } else {
+            freeChip.style.display = 'none';
+        }
+    }
 }
 
 function go(id) {
@@ -1243,7 +1350,7 @@ function go(id) {
   const pg=document.getElementById('pg-'+id); if(pg) pg.classList.add('active');
   const ni=document.getElementById('ni-'+id); if(ni) ni.classList.add('active');
   
-  const meta={dashboard:['Dashboard',"Vue d'ensemble"],ventes:['Ventes & Caisse','Journal des transactions'],stock:['Stock','Inventaire'],clients:['Clients, Dettes & Fournisseurs','Crédits et Engagements'],multi:['Multi-Métiers','3 business'],ia:['IA','Analyses'],params:['Paramètres',"Configuration"]}[id]||[id,''];
+  const meta={dashboard:['Dashboard',"Vue d'ensemble"],ventes:['Ventes & Caisse','Journal des transactions'],stock:['Stock','Inventaire'],clients:['Clients, Dettes & Fournisseurs','Crédits et Engagements'],ia:['Conseiller IA','Analyses et Prévisions'],params:['Paramètres',"Configuration"]}[id]||[id,''];
   document.getElementById('top-title').textContent=meta[0];
   document.getElementById('top-sub').textContent=meta[1];
 
@@ -1256,7 +1363,7 @@ function go(id) {
 
   const n1 = S.n1 || S.n2;
   const n2 = S.n2;
-  const pagesWithLocks = ['stock', 'clients', 'multi', 'ia'];
+  const pagesWithLocks = ['stock', 'clients', 'ia'];
   if (pagesWithLocks.includes(id)) {
     const hasAccess = (id==='stock'||id==='clients') ? n1 : n2; 
     const lockEl = document.getElementById(id+'-lock');
@@ -1265,7 +1372,7 @@ function go(id) {
     if(contEl) contEl.style.display = hasAccess ? 'block' : 'none';
   }
 
-  const renders={dashboard:renderD,ventes:renderV,stock:renderS,clients:renderC,multi:renderMB,ia:renderIA,params:renderParams};
+  const renders={dashboard:renderD,ventes:renderV,stock:renderS,clients:renderC,ia:renderIA,params:renderParams};
   if(renders[id]) renders[id]();
   closeMobSb();
 }
@@ -1274,7 +1381,7 @@ function renderAll() {
   document.querySelectorAll('.lbl-devise').forEach(el => el.textContent = S.p.devise || 'FCFA');
   populateStockOptions();
   applyLevelAccess(); 
-  renderD(); renderV(); renderS(); renderC(); renderMB(); renderIA(); renderParams(); 
+  renderD(); renderV(); renderS(); renderC(); renderIA(); renderParams(); 
 }
 
 const fmt=n=>(Math.round(Number(n)||0)).toLocaleString('fr-FR')+' '+(S.p.devise||'FCFA');
@@ -1318,7 +1425,6 @@ function toggleMonnaieFields() {
      document.getElementById('monnaie-fields').style.display = isChecked ? 'flex' : 'none';
 }
 
-// 🚀 NOUVEAU : Afficher/Cacher le sélecteur de produit pour les dettes
 function toggleClientManProd() {
     const type = document.getElementById('c-type-man').value;
     const prodFg = document.getElementById('c-prod-man-fg');
@@ -1341,28 +1447,28 @@ function populateStockOptions() {
         selFilt.value = currentVal;
     }
 
-    // 🚀 NOUVEAU : Remplit la nouvelle case "Produit lié" pour les sorties
     const selProdLie = document.getElementById('fi-prod-lie');
     if(selProdLie) {
         const currentLieVal = selProdLie.value;
         selProdLie.innerHTML = '<option value="">-- Aucun produit --</option>' + S.stock.map(p => `<option value="${p.id}">${p.nom}</option>`).join('');
         selProdLie.value = currentLieVal;
     }
-    // 🚀 NOUVEAU : Remplit le menu du Dashboard
+    
     const selDashProd = document.getElementById('dash-filt-prod');
     if(selDashProd) {
         const currentValProd = selDashProd.value;
         selDashProd.innerHTML = '<option value="">-- Choisir un produit --</option>' + S.stock.map(p => `<option value="${p.id}">${p.nom}</option>`).join('');
         selDashProd.value = currentValProd;
- // 🚀 NOUVEAU : Remplit le menu des dettes
+    }
+
     const selClientProd = document.getElementById('c-prod-man');
     if(selClientProd) {
         const currentValClientProd = selClientProd.value;
         selClientProd.innerHTML = '<option value="">-- Aucun produit spécifique --</option>' + S.stock.map(p => `<option value="${p.id}">${p.nom}</option>`).join('');
         selClientProd.value = currentValClientProd;
-    }   }
+    }
 }
-// 🚀 NOUVEAU : Calcule les performances d'un produit spécifique
+
 function renderDashProd() {
     const prodId = parseInt(document.getElementById('dash-filt-prod').value);
     const kpiBox = document.getElementById('dash-prod-kpis');
@@ -1373,30 +1479,27 @@ function renderDashProd() {
     }
     kpiBox.style.display = 'grid';
 
-    // 1. Transactions de caisse liées à ce produit
-const deb = document.getElementById('dash-filt-deb').value;
+    const deb = document.getElementById('dash-filt-deb').value;
     const fin = document.getElementById('dash-filt-fin').value;
     const txProd = S.tx.filter(t => t.stockId === prodId && (!deb || t.date >= deb) && (!fin || t.date <= fin));
     const rev = txProd.filter(t => t.e > 0).reduce((s,t) => s + t.e, 0);
     const coutAchat = txProd.filter(t => t.e > 0).reduce((s,t) => s + (parseFloat(t.pa)||0), 0);
     const depenses = txProd.filter(t => t.s > 0).reduce((s,t) => s + t.s, 0);
     
-    // 2. Trésorerie et Bénéfice
     const tresor = rev - depenses;
     const ben = rev - coutAchat - depenses;
     const marge = rev > 0 ? (ben / rev) * 100 : 0;
 
-    // 3. Dettes en cours liées à ce produit (Clients + Fournisseurs)
     const clientsLiees = S.clients.filter(c => c.stockId === prodId && !c.paye);
     const dettesTotal = clientsLiees.reduce((s,c) => s + Math.abs(c.mnt), 0);
 
-    // 4. Affichage
     document.getElementById('dp-tresor').textContent = fmt(tresor);
     document.getElementById('dp-rev').textContent = fmt(rev);
     document.getElementById('dp-ben').textContent = fmt(ben);
     document.getElementById('dp-marge').textContent = `Marge : ${marge.toFixed(0)}%`;
     document.getElementById('dp-dettes').textContent = fmt(dettesTotal);
 }
+
 function toggleType() {
     const type = document.getElementById('fi-type').value;
     const stockFg = document.getElementById('fi-stock-item').parentNode;
@@ -1423,7 +1526,7 @@ function toggleType() {
         recuFg.style.display = 'flex';
         detteLbl.style.display = 'flex';
         document.getElementById('fi-prod-lie-fg').style.display = 'none';
-   document.getElementById('fi-prod-lie').value = '';
+        document.getElementById('fi-prod-lie').value = '';
         
         document.getElementById('txt-dette-chk').textContent = "Vente à crédit (Client paie plus tard)";
         document.getElementById('lbl-dette-bloc-title').textContent = "CRÉATION AUTOMATIQUE DE LA DETTE CLIENT";
@@ -1470,7 +1573,7 @@ function saveTx(){
   const mnt=parseFloat(document.getElementById('fi-mnt').value)||0; if(!mnt)return;
   const type=document.getElementById('fi-type').value;
   const isDette=document.getElementById('fi-dette').checked;
-let stockItemId = null;
+  let stockItemId = null;
     if (type === 'e') {
         stockItemId = parseInt(document.getElementById('fi-stock-item').value) || null;
     } else {
@@ -1510,7 +1613,6 @@ let stockItemId = null;
       if(reste !== 0) { 
           clientId = Date.now() + 1;
           debtReste = reste;
-          // 🚀 NOUVEAU : Ajout de stockId dans S.clients
           if(type === 'e') {
              S.clients.push({ id: clientId, nom: cNom, tel: cTel, mnt: reste, cType: 'dette', date: txDate, ech: document.getElementById('fi-c-ech').value || today(), paye: false, stockId: stockItemId });
           } else {
@@ -1539,9 +1641,9 @@ let stockItemId = null;
           if(!mNom) return toast("Veuillez saisir le nom du client pour garder la monnaie", "r");
           e = mnt;
           
-          S.tx.push({ id: Date.now()+1, date: txDate, desc: `Monnaie gardée (Avoir) : ${mNom}`, cat: 'Mouvement de Dette/Avoir', e: rendu, s: 0, pa: 0, pay: document.getElementById('fi-pay').value, dette: false });
+          S.tx.push({ id: Date.now()+2, date: txDate, desc: `Monnaie gardée (Avoir) : ${mNom}`, cat: 'Mouvement de Dette/Avoir', e: rendu, s: 0, pa: 0, pay: document.getElementById('fi-pay').value, dette: false });
           
-          clientId = Date.now() + 2;
+          clientId = Date.now() + 3;
           S.clients.push({ id: clientId, nom: mNom, tel: mTel, mnt: -rendu, cType: 'monnaie', date: txDate, ech: txDate, paye: false });
       }
   }
@@ -1562,22 +1664,18 @@ let stockItemId = null;
   renderAll(); 
   toast('Opération enregistrée','g');
 }
-// ════════════════════════════════════════════════════════
-// 🚨 ÉTAPE 3 : LA NOUVELLE FONCTION DE SUPPRESSION 🚨
-// ════════════════════════════════════════════════════════
+
 function delTx(id){
   const t = S.tx.find(x => x.id === id);
   if(!t) return;
   
   if(!confirm("⚠️ Voulez-vous vraiment annuler cette opération ?\nSi elle est liée au stock ou à une dette, les quantités seront restaurées.")) return;
   
-  // 1. On corrige le stock si un produit était lié
   if (t.stockId && t.stockQty) {
       const p = S.stock.find(x => x.id === t.stockId);
       if (p) p.qty += t.stockQty;
   }
   
-  // 2. On corrige les dettes si elles étaient liées
   if (t.clientId && t.debtRepaymentAmount) { 
       const c = S.clients.find(x => x.id === t.clientId);
       if (c) { 
@@ -1595,11 +1693,9 @@ function delTx(id){
       }
   }
 
-  // 3. LE PIÈGE SILENCIEUX : Copie dans les archives avec la date de suppression
   const archivedTx = { ...t, deletedAt: new Date().toISOString() };
   S.archives.push(archivedTx);
 
-  // 4. Suppression de la caisse visible
   S.tx = S.tx.filter(x => x.id !== id);
   
   save(); renderAll(); toast("Opération effacée avec succès", "o");
@@ -1861,20 +1957,29 @@ function saveClientMan() {
     const nom = document.getElementById('c-nom-man').value.trim();
     const tel = document.getElementById('c-tel-man').value.trim();
     let mnt = parseFloat(document.getElementById('c-mnt-man').value);
-    const prodId = parseInt(document.getElementById('c-prod-man').value) || null; // 🚀 NOUVEAU
     
+    let rawProdId = document.getElementById('c-prod-man').value;
+    const prodId = (rawProdId && rawProdId !== "") ? parseInt(rawProdId) : ""; 
+
     if(!nom || isNaN(mnt) || mnt <= 0) return toast("Nom ou montant invalide", "r");
-    
+
     if(type === 'fournisseur' || type === 'monnaie') mnt = -mnt;
-    
-    // 🚀 NOUVEAU : On ajoute stockId dans l'objet sauvegardé
-    S.clients.push({ id: Date.now(), nom, tel, mnt, cType: type, origCat: (type==='fournisseur' ? 'Achat fournisseur' : 'Mouvement de Dette/Avoir'), date: today(), ech: today(), paye: false, stockId: prodId });
-    
-    save(); renderC(); 
-    document.getElementById('c-nom-man').value=''; 
-    document.getElementById('c-tel-man').value=''; 
+
+    S.clients.push({ 
+        id: Date.now(), 
+        nom: nom, 
+        tel: tel, 
+        mnt: mnt, 
+        cType: type, 
+        origCat: (type === 'fournisseur' ? 'Achat fournisseur' : 'Mouvement de Dette/Avoir'),
+        stockId: prodId 
+    });
+
+    save(); renderC();
+    document.getElementById('c-nom-man').value='';
+    document.getElementById('c-tel-man').value='';
     document.getElementById('c-mnt-man').value='';
-    document.getElementById('c-prod-man').value=''; // Reset du menu
+    document.getElementById('c-prod-man').value='';
     toast(mnt < 0 ? 'Dette Fournisseur/Avoir enregistrée' : 'Dette Client créée', 'g');
 }
 function openDebtModal(id) {
@@ -1909,24 +2014,21 @@ function confirmDebtModal() {
     
     if(mntPaye > Math.abs(c.mnt)) mntPaye = Math.abs(c.mnt); 
 
-    if(c.mnt < 0) {
-        c.mnt += mntPaye; 
-        if(c.mnt === 0) { c.paye = true; toast(`Soldé pour ${c.nom} !`, "g"); }
-        
-        const cat = c.origCat || ((c.cType === 'fournisseur') ? 'Remboursement Fournisseur' : 'Mouvement de Dette/Avoir');
-        const desc = (c.cType === 'fournisseur') ? `Paiement Fournisseur : ${c.nom}` : `Remboursement Monnaie : ${c.nom}`;
-        
-        // 🚀 NOUVEAU : Ajout de stockId pour déduire du produit
-        S.tx.push({ id: Date.now(), date: today(), desc: desc, cat: cat, e: 0, s: mntPaye, pa: 0, pay: payMethod, dette: false, clientId: c.id, debtRepaymentAmount: mntPaye, stockId: c.stockId });
-    } else {
-        c.mnt -= mntPaye;
-        if(c.mnt <= 0) { c.paye = true; toast(`Dette soldée pour ${c.nom} !`, "g"); } 
-        else { toast(`Paiement de ${fmt(mntPaye)} enregistré.`, "g"); }
-
-        // 🚀 NOUVEAU : Ajout de stockId pour ajouter au produit
-        S.tx.push({ id: Date.now(), date: today(), desc: `Remboursement Dette : ${c.nom}`, cat: 'Encaissement Dette', e: mntPaye, s: 0, pa: 0, pay: payMethod, dette: false, clientId: c.id, debtRepaymentAmount: mntPaye, stockId: c.stockId });
-    }
-
+    if (c.mnt < 0) {
+            c.mnt += mntPaye;
+            if (c.mnt === 0) { c.paye = true; toast(`Soldé pour ${c.nom} !`, "g"); }
+            
+            const cat = c.origCat || ((c.cType === 'fournisseur') ? 'Remboursement Fournisseur' : 'Mouvement de Dette/Avoir');
+            const desc = (c.cType === 'fournisseur') ? `Paiement Fournisseur : ${c.nom}` : `Remboursement Monnaie : ${c.nom}`;
+            
+            S.tx.push({ id: Date.now(), date: today(), desc: desc, cat: cat, e: 0, s: mntPaye, pa: 0, pay: payMethod, dette: false, clientId: c.id, stockId: c.stockId || "" });
+        } else {
+            c.mnt -= mntPaye;
+            if (c.mnt <= 0) { c.paye = true; toast(`Dette soldée pour ${c.nom} !`, "g"); }
+            else { toast(`Paiement de ${fmt(mntPaye)} enregistré.`, "g"); }
+            
+            S.tx.push({ id: Date.now(), date: today(), desc: `Remboursement Dette : ${c.nom}`, cat: 'Encaissement Dette', e: mntPaye, s: 0, pa: 0, pay: payMethod, dette: false, clientId: c.id, stockId: c.stockId || "" });
+        }
     save(); renderAll(); closeDebtModal();
 }
 
@@ -2016,58 +2118,179 @@ function renderC(){
   }).join('');
 }
 
-function saveMB(){
-  const prix=parseFloat(document.getElementById('mb-prix').value)||0; if(!prix)return;
-  const qty=parseFloat(document.getElementById('mb-qty').value)||1; const bizIdx=parseInt(document.getElementById('mb-biz').value);
-  S.mb.push({id:Date.now(),bizIdx,date:document.getElementById('mb-date').value||today(),desc:document.getElementById('mb-desc').value||'Tx',qty,prix,mnt:qty*prix,pay:document.getElementById('mb-pay').value});
-  save(); renderMB(); toast('Enregistré','g');
-}
-function delMB(id){S.mb=S.mb.filter(m=>m.id!==id);save();renderMB()}
-function renderMB(){
-  if(!S.n2)return;
-  for(let i=0;i<3;i++){const b=S.biz[i];document.getElementById(`b${i+1}-lbl`).textContent=b.name;document.getElementById(`b${i+1}-tot`).textContent=fmt(S.mb.filter(m=>m.bizIdx===i).reduce((s,m)=>s+m.mnt,0));const sel=document.getElementById('mb-biz');if(sel.options[i])sel.options[i].text=b.name}
-  const tbody=document.getElementById('mb-body');
-  if(!S.mb.length){tbody.innerHTML='<tr><td colspan="8"><div class="empty">Aucune transaction.</div></td></tr>';return}
-  let sortedMb = [...S.mb].sort((a,b) => new Date(b.date) - new Date(a.date));
-  tbody.innerHTML=sortedMb.map(m=>`<tr><td>${S.biz[m.bizIdx].name}</td><td>${m.date}</td><td>${m.desc}</td><td>${m.qty}</td><td>${fmt(m.prix)}</td><td>${fmt(m.mnt)}</td><td>${m.pay}</td><td><button onclick="delMB(${m.id})">×</button></td></tr>`).join('');
-}
-
 function waMsg(c){const j=c.ech?Math.floor((new Date()-new Date(c.ech))/86400000):0;if(j>30)return`🔴 URGENT — Bonjour ${c.nom}, votre solde de ${fmt(c.mnt)} dépasse ${j} jours. Merci de régulariser aujourd'hui 🙏`;if(j>14)return`🟡 Relance — Bonjour ${c.nom}, votre solde de ${fmt(c.mnt)} est dû depuis ${j} jours. Merci de payer cette semaine.`;return`🟢 Info — Bonjour ${c.nom}, votre solde de ${fmt(c.mnt)} est dû. Merci !`}
 
-function renderIA(){
-  if(!S.n2)return;
-  
-  const revReels = S.tx.filter(t => t.cat !== 'Mouvement de Dette/Avoir' && t.cat !== 'Remboursement Fournisseur').reduce((s,t)=>s+t.e,0);
-  const depReelles = S.tx.filter(t => t.cat !== 'Mouvement de Dette/Avoir' && t.cat !== 'Remboursement Fournisseur' && t.cat !== 'Achat fournisseur').reduce((s,t)=>s+t.s,0);
-  const totPA = S.tx.filter(t => t.cat !== 'Mouvement de Dette/Avoir' && t.cat !== 'Remboursement Fournisseur').reduce((s,t) => s + (parseFloat(t.pa)||0), 0);
-  
-  const totE=S.tx.reduce((s,t)=>s+t.e,0);
-  const totS=S.tx.reduce((s,t)=>s+t.s,0);
-  
-  const ben=revReels-depReelles-totPA; 
-  const marge=revReels>0?ben/revReels:0;
-  const tresor=S.si+totE-totS;
-  const dettes=S.clients.filter(c=>!c.paye && c.mnt>0).reduce((s,c)=>s+c.mnt,0);
-  
-  const recos=[];
-  if(revReels===0){recos.push({t:'warn',l:'Données insuffisantes',tx:'Aucune vente enregistrée. Saisissez vos transactions pour obtenir des recommandations.'})}
-  else{
-    if(marge>=.3)recos.push({t:'ok',l:'Marge bénéficiaire',tx:`Excellente marge nette de ${(marge*100).toFixed(0)}%. Capitalisez en augmentant votre volume.`});
-    else if(marge>=.15)recos.push({t:'warn',l:'Marge bénéficiaire',tx:`Marge de ${(marge*100).toFixed(0)}% correcte mais améliorable. Réduisez vos coûts d'achat.`});
-    else recos.push({t:'crit',l:'Marge bénéficiaire',tx:`ALERTE : marge de ${(marge*100).toFixed(0)}% insuffisante. Revoyez vos prix de vente.`});
-    if(tresor>=500000)recos.push({t:'ok',l:'Trésorerie',tx:`Solide à ${fmt(tresor)}. Pensez à réinvestir en stock ou marketing.`});
-    else if(tresor>=150000)recos.push({t:'warn',l:'Trésorerie',tx:`À surveiller : ${fmt(tresor)}. Priorisez le recouvrement des dettes.`});
-    else recos.push({t:'crit',l:'Trésorerie',tx:`Critique : ${fmt(tresor)}. Arrêtez les dépenses non essentielles.`});
-    if(dettes===0)recos.push({t:'ok',l:'Dettes clients',tx:'Aucune dette — excellente gestion.'});
-    else if(dettes<=200000)recos.push({t:'warn',l:'Dettes clients',tx:`${fmt(dettes)} en cours. Relancez cette semaine.`});
-    else recos.push({t:'crit',l:'Dettes clients',tx:`URGENT : ${fmt(dettes)} impayés. Relancez aujourd'hui.`});
-  }
-  document.getElementById('ia-recos').innerHTML=recos.map(r=>`<div class="reco ${r.t}"><div class="reco-lbl">${r.l}</div><div class="reco-txt">${r.tx}</div></div>`).join('');
-  const m=marge||.2;const maxR=Math.max(revReels*1.26,1);
-  document.getElementById('ia-prev').innerHTML=[['Mois en cours',revReels,ben],['M+1',Math.round(revReels*1.08),Math.round(revReels*1.08*m)],['M+2',Math.round(revReels*1.17),Math.round(revReels*1.17*m)],['M+3',Math.round(revReels*1.26),Math.round(revReels*1.26*m)]].map((p,i)=>`<div class="prev-item"><div class="prev-head"><span style="color:${i===0?'var(--green)':'var(--ink2)'}">${p[0]}</span><span class="td-mono" style="color:var(--green)">${fmt(p[1])}</span></div><div class="prev-bar"><div class="prev-fill" style="width:${(p[1]/maxR*100).toFixed(0)}%;background:${['var(--green)','var(--purple)','var(--orange)','var(--red)'][i]}"></div></div><div class="prev-sub">Bénéfice estimé : ${fmt(p[2])}</div></div>`).join('');
-  const imp=S.clients.filter(c=>!c.paye && c.mnt>0);
-  if(!imp.length){document.getElementById('ia-wa').innerHTML='<div class="empty"><p>Aucun client à relancer.</p></div>';return}
-  document.getElementById('ia-wa').innerHTML=imp.map(c=>`<div class="wa-card"><div class="wa-top"><span>${c.nom}</span><span class="td-mono" style="color:var(--red)">${fmt(c.mnt)}</span></div><div class="wa-msg" onclick="navigator.clipboard.writeText(this.textContent.replace(\'(copier)\',\'\').trim());toast(\'Copié !\',\'g\')">${waMsg(c)} <span style="font-size:10px;color:var(--ink4)">(copier)</span></div></div>`).join('');
+// 🚀 LE NOUVEAU CERVEAU IA (ORIENTÉ BÉNÉFICE & PRODUITS)
+function renderIA() {
+    try {
+        if(!document.getElementById('ia-health-score')) return;
+
+        // 1. Aspiration des données & Calcul de la RENTABILITÉ
+        let totalCaisse = (S.si || 0) + (S.tx || []).reduce((s,t)=>s+(t.e||0),0) - (S.tx || []).reduce((s,t)=>s+(t.s||0),0);
+        let totalDettes = (S.clients || []).filter(c=>!c.paye && c.mnt>0).reduce((s,c)=>s+c.mnt,0);
+        
+        let ventesReelles = (S.tx || []).filter(t => t.cat !== 'Mouvement de Dette/Avoir' && t.cat !== 'Remboursement Fournisseur' && t.e > 0);
+        let depensesReelles = (S.tx || []).filter(t => t.cat !== 'Mouvement de Dette/Avoir' && t.cat !== 'Remboursement Fournisseur' && t.cat !== 'Achat fournisseur' && t.s > 0);
+        
+        let revReels = ventesReelles.reduce((s,t)=>s+(t.e||0),0);
+        let coutsAchats = ventesReelles.reduce((s,t)=>s+(parseFloat(t.pa)||0),0);
+        let totalDepenses = depensesReelles.reduce((s,t)=>s+(t.s||0),0);
+        
+        // LE VRAI BENEFICE NET
+        let benNet = revReels - coutsAchats - totalDepenses;
+        let margePct = revReels > 0 ? (benNet / revReels) * 100 : 0;
+        let panierMoyen = ventesReelles.length > 0 ? (revReels / ventesReelles.length) : 0;
+        
+        let ruptures = (S.stock || []).filter(p=>parseFloat(p.qty) <= parseFloat(p.min||10));
+
+        // 2. Analyse des Meilleurs/Pires Produits
+        let prodStats = {};
+        ventesReelles.forEach(v => {
+            if(v.stockId) {
+                if(!prodStats[v.stockId]) prodStats[v.stockId] = { nom: (S.stock.find(p=>p.id===v.stockId)||{}).nom || 'Produit', rev:0, ben:0 };
+                prodStats[v.stockId].rev += v.e;
+                prodStats[v.stockId].ben += (v.e - (parseFloat(v.pa)||0));
+            }
+        });
+        let prodArray = Object.values(prodStats).sort((a,b) => b.ben - a.ben);
+        let bestProd = prodArray.length > 0 ? prodArray[0] : null;
+        let worstProd = prodArray.length > 1 ? prodArray[prodArray.length-1] : null;
+
+        // 3. Score de Santé sur 100
+        let score = 50; 
+        if(benNet > 0) score += 25; else score -= 15;
+        if(margePct > 20) score += 15;
+        if(totalDettes < (revReels * 0.2)) score += 10; else score -= 15;
+        if(ruptures.length === 0) score += 10;
+        score = Math.max(0, Math.min(100, score)); 
+
+        const scoreEl = document.getElementById('ia-health-score');
+        if(scoreEl) {
+            scoreEl.textContent = `${Math.round(score)}/100`;
+            scoreEl.style.color = score > 75 ? 'var(--green)' : score > 40 ? 'var(--orange)' : 'var(--red)';
+        }
+
+        const nameEl = document.getElementById('ia-user-name');
+        if(nameEl) nameEl.textContent = (S.user && S.user.name) ? S.user.name.split(' ')[0] : 'Patron';
+
+        // 4. Matrice SWOT (Sur mesure selon les bénéfices)
+        let s='', w='', o='', t='';
+        
+        if(benNet > 0) s += `<li>Bénéfice net positif (${fmt(benNet)})</li>`; else w += `<li>L'entreprise ne génère pas de bénéfice réel.</li>`;
+        if(bestProd) s += `<li>"${bestProd.nom}" est votre produit star !</li>`;
+        if(margePct > 20) s += `<li>Excellente marge globale (${margePct.toFixed(1)}%)</li>`;
+        
+        if(worstProd && worstProd.ben < (worstProd.rev * 0.1)) w += `<li>Le produit "${worstProd.nom}" n'est pas assez rentable.</li>`;
+        if(totalDettes > (benNet * 0.5) && benNet > 0) w += `<li>Les dettes étouffent vos bénéfices.</li>`;
+        if(totalDepenses > (revReels * 0.4)) w += `<li>Vos dépenses annexes sont trop lourdes.</li>`;
+        
+        if(bestProd) o += `<li>Investissez plus de budget sur "${bestProd.nom}".</li>`;
+        o += `<li>Proposez des packs pour monter le panier moyen (${fmt(panierMoyen)}).</li>`;
+        
+        if(ruptures.length > 0) t += `<li>${ruptures.length} rupture(s) = ventes perdues.</li>`;
+        if(totalDettes > totalCaisse) t += `<li>Risque de manque de liquidité immédiate.</li>`;
+        
+        if(!s) s = `<li>Enregistrez des ventes pour analyser les forces.</li>`;
+        if(!w) w = `<li>Aucune faiblesse financière majeure.</li>`;
+        if(!t) t = `<li>Aucune menace critique à l'horizon.</li>`;
+
+        document.getElementById('swot-s').innerHTML = `<ul style="margin:0; padding-left:15px;">${s}</ul>`;
+        document.getElementById('swot-w').innerHTML = `<ul style="margin:0; padding-left:15px;">${w}</ul>`;
+        document.getElementById('swot-o').innerHTML = `<ul style="margin:0; padding-left:15px;">${o}</ul>`;
+        document.getElementById('swot-t').innerHTML = `<ul style="margin:0; padding-left:15px;">${t}</ul>`;
+
+        // 5. LE PANNEAU SECRET (Explications textuelles de l'analyste)
+        window.showSwotDetail = function(type) {
+            const panel = document.getElementById('swot-details-panel');
+            panel.style.display = 'block';
+            
+            let html = "";
+            if(type === 'S') {
+                html = `<strong>Analyse des Forces :</strong> Votre entreprise a généré <b>${fmt(benNet)}</b> de bénéfice net réel, ce qui signifie que votre modèle fonctionne. `;
+                if(bestProd) html += `De plus, le produit <b>${bestProd.nom}</b> est une mine d'or, il génère à lui seul ${fmt(bestProd.ben)} de profit pur ! Mettez-le en avant.`;
+            }
+            if(type === 'W') {
+                html = `<strong>Analyse des Faiblesses :</strong> `;
+                if(totalDepenses > 0) html += `Vos dépenses annexes s'élèvent à ${fmt(totalDepenses)}. Cherchez à réduire les frais inutiles. `;
+                if(worstProd) html += `Attention au produit <b>${worstProd.nom}</b> : vous le vendez, mais il vous rapporte trop peu de marge par rapport à l'effort fourni. Pensez à augmenter son prix ou à l'abandonner.`;
+                if(!totalDepenses && !worstProd && benNet > 0) html = `<strong>Analyse des Faiblesses :</strong> Vos chiffres sont bons. Surveillez simplement vos coûts fixes.`;
+            }
+            if(type === 'O') {
+                html = `<strong>Opportunités de Croissance :</strong> Vos clients dépensent en moyenne <b>${fmt(panierMoyen)}</b> par visite. Pour faire exploser vos bénéfices, essayez de créer des "Packs promotionnels" pour forcer le client à dépenser 10% de plus à chaque passage.`;
+            }
+            if(type === 'T') {
+                html = `<strong>Menaces pour la trésorerie :</strong> `;
+                if(totalDettes > 0) html += `Vous avez ${fmt(totalDettes)} bloqués chez les clients. C'est de l'argent qui perd de la valeur chaque jour. `;
+                if(ruptures.length > 0) html += `Les ruptures de stock vous empêchent de répondre à la demande et envoient vos clients chez la concurrence.`;
+                if(totalDettes === 0 && ruptures.length === 0) html += `Aucune menace financière détectée ce mois-ci. Continuez !`;
+            }
+            panel.innerHTML = html;
+        };
+
+        // 6. Prévisions basées sur le BÉNÉFICE (pas juste le chiffre d'affaires)
+        let prevHtml = '';
+        let baseProgression = benNet > 0 ? benNet : 5000; 
+        let maxBar = baseProgression * 1.3; 
+        for(let i=0; i<3; i++) {
+            let proj = baseProgression * (1 + ((i+1)*0.08)); // +8% de bénéfice par mois
+            let pct = Math.min(100, (proj / maxBar) * 100);
+            prevHtml += `
+            <div style="margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600; margin-bottom:6px;">
+                    <span style="color:var(--ink2)">Bénéfice estimé (Mois +${i+1})</span>
+                    <span style="color:var(--green)">${fmt(proj)}</span>
+                </div>
+                <div style="height:8px; background:var(--bg2); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:${pct}%; background:var(--green); border-radius:4px;"></div>
+                </div>
+            </div>`;
+        }
+        if(document.getElementById('ia-prev')) document.getElementById('ia-prev').innerHTML = prevHtml;
+
+        // 7. Missions (Liées à la rentabilité)
+        let missions = `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; margin-bottom:12px; border-bottom:1px solid var(--border);">
+                <span style="font-size:12px; color:var(--ink3)">Bénéfice Net Actuel</span>
+                <span style="font-weight:bold; color:var(--purple); font-family:var(--mono)">${fmt(benNet)}</span>
+            </div>
+        `;
+        if(totalDettes > 0) missions += `<div style="display:flex; gap:10px; padding:12px; background:var(--orange-pale); border-radius:8px; margin-bottom:8px;"><div>💰</div><div><strong>Sauvez vos bénéfices</strong><br><span style="font-size:11px;color:var(--ink3)">Récupérez les ${fmt(totalDettes)} impayés de toute urgence.</span></div></div>`;
+        if(worstProd && worstProd.ben < (worstProd.rev * 0.1)) missions += `<div style="display:flex; gap:10px; padding:12px; background:var(--bg2); border-radius:8px; margin-bottom:8px;"><div>⚖️</div><div><strong>Ajustement de Prix</strong><br><span style="font-size:11px;color:var(--ink3)">Augmentez le prix de "${worstProd.nom}" qui n'est pas assez rentable.</span></div></div>`;
+        
+        if(totalDettes === 0 && (!worstProd || worstProd.ben >= (worstProd.rev * 0.1))) missions += `<div class="empty" style="padding:10px">Tout est optimisé. Bravo !</div>`;
+        
+        if(document.getElementById('ia-missions')) document.getElementById('ia-missions').innerHTML = missions;
+
+        // 8. Module Gemini Hybride
+        const geminiLocked = document.getElementById('ia-gemini-locked');
+        const geminiUnlocked = document.getElementById('ia-gemini-unlocked');
+        const key = (S.p && S.p.geminiKey) ? S.p.geminiKey.trim() : ''; 
+        if(key !== '') {
+            if(geminiLocked) geminiLocked.style.display = 'none';
+            if(geminiUnlocked) geminiUnlocked.style.display = 'block';
+        } else {
+            if(geminiLocked) geminiLocked.style.display = 'block';
+            if(geminiUnlocked) geminiUnlocked.style.display = 'none';
+        }
+
+        // 9. Relances WhatsApp
+        const debiteurs = (S.clients || []).filter(c => !c.paye && c.mnt > 0);
+        if (debiteurs.length === 0) {
+            if(document.getElementById('ia-wa')) document.getElementById('ia-wa').innerHTML = '<div class="empty" style="padding:20px;">Aucun client à relancer.</div>';
+        } else {
+            if(document.getElementById('ia-wa')) document.getElementById('ia-wa').innerHTML = debiteurs.map(c => {
+                let phone = c.tel ? c.tel.replace(/\D/g, '') : '';
+                const msg = encodeURIComponent(`Bonjour ${c.nom}, sauf erreur, vous avez un solde en attente de ${fmt(c.mnt)}. Pourrions-nous faire le point ? Merci d'avance !`);
+                const link = phone ? `https://wa.me/${phone}?text=${msg}` : '#';
+                return `<div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid var(--border); transition:background 0.2s;" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">
+                    <div><strong style="color:var(--ink)">${c.nom}</strong><br><span style="color:var(--red); font-size:13px; font-weight:bold; font-family:var(--mono)">${fmt(c.mnt)}</span></div>
+                    ${phone ? `<a href="${link}" target="_blank" class="btn btn-sm" style="background:#25D366; color:white; border-radius:20px;"><svg class="ic-sm" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> Relancer</a>` : `<span style="font-size:11px;color:var(--ink3)">Pas de numéro</span>`}
+                </div>`;
+            }).join('');
+        }
+    } catch (e) {
+        console.error("Erreur de calcul IA : ", e);
+    }
 }
 
 function setDashFilter(key, label) {
@@ -2252,26 +2475,19 @@ function renderD(){
 }
 
 function renderParams(){
-  const statusEl = document.getElementById('p-licence-status'), emailEl = document.getElementById('p-licence-email');
-  
-  // 🚀 CORRECTION : Affichage intelligent
+  const statusEl = document.getElementById('p-licence-status');
   let statusText = S.n2 ? '✅ Licence Premium (Niveau 2)' : S.n1 ? '✅ Licence Standard (Niveau 1)' : '⚠️ Version Gratuite';
-  
-  // On ajoute la date UNIQUEMENT si c'est un N2 actif
-  if (S.finAboDate) {
-      statusText += ` (Valable jusqu'au ${S.finAboDate})`;
-  }
-  
   if(statusEl) statusEl.textContent = statusText;
-  if(emailEl && S.user) emailEl.textContent = S.user.email || '—';
   
-  document.getElementById('p-tresor').value=S.p.tresor;document.getElementById('p-stock').value=S.p.stock;document.getElementById('p-marge').value=S.p.marge;
+  document.getElementById('p-tresor').value = S.p.tresor || 50000;
+  document.getElementById('p-stock').value = S.p.stock || 10;
+  document.getElementById('p-marge').value = S.p.marge || 20;
   
   const deviseSelect = document.getElementById('p-devise');
   const warnMsg = document.getElementById('devise-warn');
   if(deviseSelect) {
     deviseSelect.value = S.p.devise || 'FCFA';
-    if(S.tx.length > 0 || S.stock.length > 0 || S.clients.length > 0) {
+    if(S.tx && (S.tx.length > 0 || S.stock.length > 0 || S.clients.length > 0)) {
       deviseSelect.disabled = true;
       if(warnMsg) warnMsg.style.display = 'block';
     } else {
@@ -2280,14 +2496,12 @@ function renderParams(){
     }
   }
   
-  const bizContainer = document.getElementById('p-biz');
-  if(S.n2) { 
-    bizContainer.innerHTML=S.biz.map((b,i)=>`<div style="margin-bottom:14px"><div class="fl" style="margin-bottom:5px">Business ${i+1}</div><div class="fgrid" style="grid-template-columns:1fr 1fr"><input type="text" class="fi" value="${b.name}" onchange="S.biz[${i}].name=this.value;save()"></div></div>`).join('');
-  } else {
-    bizContainer.innerHTML='<div class="empty"><p>Le paramétrage des business multiples est réservé à la licence Niveau 2.</p></div>';
-  }
+  const bizInput = document.getElementById('p-biz-name');
+  if(bizInput) bizInput.value = S.bizName || '';
+  
+  const menuName = document.querySelector('.sb-name');
+  if(menuName) menuName.textContent = S.bizName || 'Gestia';
 
-  // 🛡️ AFFICHAGE DE LA CARTE D'ARCHIVE POUR LE NIVEAU 2
   const cardArch = document.getElementById('card-archive');
   if (cardArch) {
       if (S.n2) {
@@ -2303,20 +2517,60 @@ function renderParams(){
           cardArch.style.display = 'none';
       }
   }
+
+  // 🔒 NOUVEAU : VERROUILLAGE CORRIGÉ (readOnly au lieu de disabled)
+  const geminiInput = document.getElementById('p-gemini-key');
+  if(geminiInput) {
+      if(S.p && S.p.geminiKey) {
+          geminiInput.value = '••••••••••••••••••••••••••••••';
+          geminiInput.readOnly = true; // Empêche de taper
+          geminiInput.style.backgroundColor = "var(--bg)"; // Donne l'air grisé
+          geminiInput.style.cursor = "pointer"; // Petite main au survol
+          geminiInput.title = 'Double-cliquez pour modifier la clé';
+          
+          // Le double-clic va enfin marcher !
+          geminiInput.ondblclick = function() {
+              this.readOnly = false;
+              this.style.backgroundColor = "var(--surface)";
+              this.style.cursor = "text";
+              this.value = '';
+              this.focus();
+              toast('Entrez votre nouvelle clé', 'o');
+          };
+      } else {
+          geminiInput.value = '';
+          geminiInput.readOnly = false;
+          geminiInput.style.backgroundColor = "var(--surface)";
+          geminiInput.style.cursor = "text";
+          geminiInput.title = '';
+          geminiInput.ondblclick = null;
+      }
+  }
 }
 function saveParams(){
-  S.p.tresor=parseInt(document.getElementById('p-tresor').value)||50000;
-  S.p.stock=parseInt(document.getElementById('p-stock').value)||10;
-  S.p.marge=parseInt(document.getElementById('p-marge').value)||20;
-  S.p.devise=document.getElementById('p-devise').value||'FCFA';
-  save(); renderAll(); toast('Enregistré','g');
-}
+  S.p.tresor = parseInt(document.getElementById('p-tresor').value) || 50000;
+  S.p.stock = parseInt(document.getElementById('p-stock').value) || 10;
+  S.p.marge = parseInt(document.getElementById('p-marge').value) || 20;
+  S.p.devise = document.getElementById('p-devise').value || 'FCFA';
+  
+  const bizInput = document.getElementById('p-biz-name');
+  if (bizInput) {
+      S.bizName = bizInput.value.trim();
+  }
 
+  // 🔒 NOUVEAU : Sauvegarde sécurisée de la clé API
+  const geminiInput = document.getElementById('p-gemini-key');
+  if (geminiInput && !geminiInput.disabled && geminiInput.value.trim() !== '') {
+      if (!S.p) S.p = {};
+      S.p.geminiKey = geminiInput.value.trim();
+  }
+
+  save(); renderAll(); toast('Enregistré', 'g');
+}
 // ══════════════════════════════════════════
 //  🛡️ LE SYSTÈME DE CODE PIN & LE COFFRE
 // ══════════════════════════════════════════
 
-// 1. Ouvrir et fermer la fenêtre de création
 function openPinSetup() {
     document.getElementById('pin-setup-modal').classList.add('show');
     document.getElementById('pin-new').value = '';
@@ -2327,7 +2581,6 @@ function closePinSetup() {
     document.getElementById('pin-setup-modal').classList.remove('show');
 }
 
-// 2. Sauvegarder le nouveau code PIN
 function savePin() {
     const p1 = document.getElementById('pin-new').value;
     const p2 = document.getElementById('pin-confirm').value;
@@ -2342,7 +2595,6 @@ function savePin() {
     toast("Coffre-fort activé !", "g");
 }
 
-// 3. Demander le code
 function openArchivePrompt() {
     document.getElementById('pin-prompt-modal').classList.add('show');
     document.getElementById('pin-entry').value = '';
@@ -2353,7 +2605,6 @@ function closePinPrompt() {
     document.getElementById('pin-prompt-modal').classList.remove('show');
 }
 
-// 4. Vérifier le code tapé
 function verifyPin() {
     const entry = document.getElementById('pin-entry').value;
     
@@ -2368,7 +2619,6 @@ function verifyPin() {
     }
 }
 
-// 5. Réinitialisation via Google (Code oublié)
 async function resetPin() {
     if(!confirm("Vous allez être redirigé vers Google pour prouver votre identité.\nVotre ancien code PIN sera effacé.")) return;
     try {
@@ -2383,7 +2633,6 @@ async function resetPin() {
     }
 }
 
-// 6. Afficher le coffre-fort
 function openArchiveModal() {
     renderArchiveTable();
     document.getElementById('archive-modal').classList.add('show');
@@ -2421,20 +2670,17 @@ function renderArchiveTable() {
     }).join('');
 }
 
-// 🚨 ÉTAPE 5 : LA JUSTICE (RESTAURATION DE L'ARGENT) 🚨
 function restoreArchive(id) {
     const a = S.archives.find(x => x.id === id);
     if(!a) return;
     
     if(!confirm("🔄 Voulez-vous vraiment restaurer cette opération ?\nL'argent et les quantités (stock/dettes) seront remis dans la caisse exactement comme avant la suppression.")) return;
 
-    // 1. Annuler l'impact sur le stock (On l'avait remis en rayon quand on l'a supprimé, donc on le renlève)
     if (a.stockId && a.stockQty) {
         const p = S.stock.find(x => x.id === a.stockId);
         if (p) p.qty -= a.stockQty; 
     }
 
-    // 2. Annuler l'impact sur les dettes (L'inverse exact de delTx)
     if (a.clientId && a.debtRepaymentAmount) { 
         const c = S.clients.find(x => x.id === a.clientId);
         if (c) { 
@@ -2451,11 +2697,9 @@ function restoreArchive(id) {
         }
     }
 
-    // 3. On remet la transaction dans la vraie caisse en lui enlevant l'étiquette 'deletedAt'
     const { deletedAt, ...originalTx } = a;
     S.tx.push(originalTx);
 
-    // 4. On la retire du coffre-fort
     S.archives = S.archives.filter(x => x.id !== id);
 
     save(); 
@@ -2464,7 +2708,6 @@ function restoreArchive(id) {
     toast("Preuve restaurée dans la caisse !", "g");
 }
 
-// 🚨 ÉTAPE 5 : LE NETTOYAGE 🚨
 function emptyArchive() {
     if(!S.archives || !S.archives.length) return;
     if(!confirm("⚠️ ATTENTION : Vous allez vider TOUTE la corbeille définitivement.\nCes preuves seront perdues à jamais. Continuer ?")) return;
@@ -2493,24 +2736,19 @@ auth.onAuthStateChanged(async (user) => {
         await checkLicence(S.user.email);
         await loadUserData(S.user.email);
     } else {
-        // NOUVEAU : Si la personne n'est PAS connectée, on fait apparaître le mur
         let loginWall = document.getElementById('login-wall');
         if (loginWall) loginWall.style.display = 'flex';
     }
 });
 });
-// 🚀 NOUVEAU : Fonction d'exportation Excel (RAPPORT COMPLET CORRIGÉ)
+
 function exportExcel() {
     let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
     let sep = ";"; 
 
-    // ==========================================
-    // SECTION 1 : LE TABLEAU DE BORD (PERFORMANCES GLOBALES)
-    // ==========================================
     csvContent += "=== 1. PERFORMANCES GLOBALES (TABLEAU DE BORD) ===\n\n";
     csvContent += `Indicateur${sep}Valeur Actuelle\n`;
     
-    // CORRECTION 1 : On utilise les étiquettes fixes pour trouver les vrais chiffres affichés à l'écran !
     let valTresor = document.getElementById('lbl-kpi-tresor') ? document.getElementById('lbl-kpi-tresor').nextElementSibling.innerText.replace(/[\r\n]+/g, " ").trim() : '0';
     let valRev = document.getElementById('lbl-kpi-rev') ? document.getElementById('lbl-kpi-rev').nextElementSibling.innerText.replace(/[\r\n]+/g, " ").trim() : '0';
     let valBen = document.getElementById('lbl-kpi-ben') ? document.getElementById('lbl-kpi-ben').nextElementSibling.innerText.replace(/[\r\n]+/g, " ").trim() : '0';
@@ -2521,9 +2759,6 @@ function exportExcel() {
     csvContent += `BENEFICE NET${sep}"${valBen}"\n`;
     csvContent += `DETTES CLIENTS${sep}"${valDettes}"\n\n\n`;
 
-    // ==========================================
-    // SECTION 2 : REPARTITION DETAILLEE DE LA TRESORERIE
-    // ==========================================
     csvContent += "=== 2. REPARTITION DETAILLEE DE LA TRESORERIE ===\n\n";
     csvContent += `Moyen de paiement${sep}Solde Actuel (XOF)\n`;
     
@@ -2541,14 +2776,10 @@ function exportExcel() {
     csvContent += `Virement Bancaire${sep}${tVir}\n`;
     csvContent += `Autres moyens${sep}${tAutre}\n\n\n`;
 
-    // ==========================================
-    // SECTION 3 : ÉTAT ACTUEL DU STOCK
-    // ==========================================
     csvContent += "=== 3. ETAT ACTUEL DU STOCK ===\n\n";
     csvContent += `Réf${sep}Nom du Produit${sep}Catégorie${sep}Quantité en Stock${sep}Prix d'Achat (XOF)${sep}Prix de Vente (XOF)${sep}Valeur Totale Vente (XOF)\n`;
 
     S.stock.forEach(function(item) {
-        // CORRECTION 2 : L'ajout de ="..." force Excel à afficher le chiffre exact sans faire de calcul scientifique
         let idStr = `="${item.id}"`; 
         let nomStr = `"${(item.nom || '').replace(/"/g, '""')}"`;
         let catStr = `"${item.cat || ''}"`;
@@ -2559,9 +2790,6 @@ function exportExcel() {
     });
     csvContent += "\n\n\n";
 
-    // ==========================================
-    // SECTION 4 : HISTORIQUE DES TRANSACTIONS
-    // ==========================================
     csvContent += "=== 4. HISTORIQUE COMPLET DES TRANSACTIONS ===\n\n";
     csvContent += `Date${sep}Type${sep}Description${sep}Catégorie${sep}Montant (XOF)${sep}Moyen de Paiement\n`;
 
@@ -2584,6 +2812,108 @@ function exportExcel() {
     document.body.removeChild(link);
     
     toast('Rapport Business complet téléchargé !', 'g');
+}
+
+function changeBizType() {
+    const newVal = document.getElementById('biz-type-select').value;
+    S.bizType = newVal; 
+    save();
+    toast("Moteur mis à jour ! Rechargement...", "g");
+    
+    setTimeout(() => { location.reload(); }, 1000);
+}
+
+function checkBizLock() {
+    const sel = document.getElementById('biz-type-select');
+    const msg = document.getElementById('biz-lock-msg');
+    if(!sel) return;
+
+    sel.value = S.bizType || 'commerce';
+
+    const hasTx = S.tx && S.tx.length > 0;
+    const hasStock = S.stock && S.stock.length > 0;
+    const hasClients = S.clients && S.clients.length > 0;
+
+    if (hasTx || hasStock || hasClients) {
+        sel.disabled = true;          
+        sel.style.opacity = "0.6";    
+        sel.style.cursor = "not-allowed";
+        msg.style.display = 'block';  
+    }
+}
+
+checkBizLock();
+
+// 🧠 MÉMOIRE ET MOTEUR DU CHATBOT (NOUVEAU MODÈLE GEMINI 3 FLASH)
+let chatHistory = []; 
+
+async function sendGeminiMessage() {
+    const key = (S.p && S.p.geminiKey) ? S.p.geminiKey.trim() : '';
+    if(!key) return toast("Clé API manquante dans les Paramètres", "r");
+
+    const input = document.getElementById('chat-input');
+    const btn = document.getElementById('chat-btn');
+    const box = document.getElementById('chat-history');
+    const userText = input.value.trim();
+
+    if(!userText) return;
+
+    // 1. Affichage utilisateur
+    box.innerHTML += `<div class="msg user">${userText}</div>`;
+    input.value = '';
+    box.scrollTop = box.scrollHeight;
+    btn.disabled = true;
+
+    // 2. Bulle de réflexion
+    const idLoader = 'loader-' + Date.now();
+    box.innerHTML += `<div class="msg ai" id="${idLoader}"><span style="color:var(--ink4);"><em>Analyse avec Gemini 3...</em></span></div>`;
+    box.scrollTop = box.scrollHeight;
+
+    // 3. Préparation du contexte (Tes chiffres)
+    let totalCaisse = (S.si || 0) + (S.tx || []).reduce((s,t)=>s+(t.e||0),0) - (S.tx || []).reduce((s,t)=>s+(t.s||0),0);
+    let totalDettes = (S.clients || []).filter(c=>!c.paye && c.mnt>0).reduce((s,c)=>s+c.mnt,0);
+    let ruptures = (S.stock || []).filter(p=>parseFloat(p.qty) <= parseFloat(p.min||10)).map(p=>p.nom).join(', ');
+
+    // La consigne invisible (on ne l'ajoute qu'au tout premier message pour ne pas surcharger)
+    let texteAEnvoyer = userText;
+    if (chatHistory.length === 0) {
+        texteAEnvoyer = `[CONTEXTE : Tu es le directeur financier de "${S.bizName || 'Ma Boutique'}". Trésorerie: ${totalCaisse} FCFA. Dettes: ${totalDettes} FCFA. Ruptures: ${ruptures || 'Aucune'}. Réponds court et pro.]\n\nQuestion : ` + userText;
+    }
+
+    // 4. On met à jour l'historique
+    chatHistory.push({ role: "user", parts: [{ text: texteAEnvoyer }] });
+
+    try {
+        // LA SOLUTION ÉTAIT LÀ : On utilise "gemini-3-flash-preview" trouvé dans la doc !
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${key}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: chatHistory
+            })
+        });
+
+        const data = await response.json();
+        
+        if(data.error) throw new Error(data.error.message);
+
+        const aiText = data.candidates[0].content.parts[0].text;
+        
+        // Sauvegarde de la réponse dans la mémoire
+        chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+
+        // Affichage final propre
+        document.getElementById(idLoader).innerHTML = aiText.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        box.scrollTop = box.scrollHeight;
+
+    } catch(e) {
+        console.error(e);
+        document.getElementById(idLoader).innerHTML = `<span style="color:var(--red)"><b>Erreur technique :</b> ${e.message}</span>`;
+        chatHistory.pop(); // On retire le message qui a planté
+    } finally {
+        btn.disabled = false;
+        input.focus();
+    }
 }
 </script>
 </body>
