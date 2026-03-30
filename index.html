@@ -16,10 +16,15 @@
 <!--  2. APERÇU WHATSAPP, FACEBOOK, ETC.                        -->
 <!-- ══════════════════════════════════════════════════════════ -->
 <meta name="description" content="La solution tout-en-un pour gérer votre caisse, vos stocks et vos clients simplement.">
-<meta property="og:title" content="Gestia - Votre Business dans la poche">
-<meta property="og:description" content="Gérez vos ventes, vos stocks et vos dettes clients depuis une seule application sécurisée. Activez votre licence aujourd'hui.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://via.placeholder.com/1200x630/16A085/FFFFFF?text=Gestia+-+Gestion+PME">
+    <meta property="og:title" content="Gestia - Gestion Simplifiée">
+    <meta property="og:description" content="Gérez votre caisse, stock et dettes.">
+    <meta property="og:image" content="https://placehold.co/1200x630/10B981/FFFFFF/png?text=Gestia&font=Montserrat">
+    <meta property="og:type" content="website">
+
+    <!-- 📱 LIAISON PWA (APP MOBILE) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10B981">
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/10B981/FFFFFF/png?text=G">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://apis.google.com">
@@ -2917,4 +2922,14 @@ async function sendGeminiMessage() {
 }
 </script>
 </body>
+<!-- 🤖 ACTIVATION DU MODE HORS-LIGNE -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('✅ Mode Hors-ligne activé !', reg.scope))
+            .catch(err => console.log('❌ Erreur du mode hors-ligne', err));
+        });
+      }
+    </script>
 </html>
